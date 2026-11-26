@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feliz Cumpleaños, Yelitsa</title>
+  <!-- Fuentes elegantes de Google -->
+  <link href="https://googleapis.com" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #fdfbfb 0%, #f3d9e2 50%, #e6c3d1 100%);
+      font-family: 'Montserrat', sans-serif;
+      overflow: hidden;
+      padding: 20px;
+    }
+
+    /* Corazones flotantes de fondo */
+    .bg-hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .bg-heart {
+      position: absolute;
+      bottom: -50px;
+      color: rgba(214, 51, 108, 0.15);
+      font-size: 24px;
+      animation: floatUp 10s infinite ease-in;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Contenedor 3D de la tarjeta */
+    .card-container {
+      perspective: 1500px;
+      width: 100%;
+      max-width: 420px;
+      height: 560px;
+      position: relative;
+      z-index: 1;
+      cursor: pointer;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1.2s cubic-bezier(0.4, 0.2, 0.2, 1);
+      box-shadow: 0 25px 50px rgba(136, 19, 55, 0.2);
+      border-radius: 20px;
+    }
+
+    /* Estado abierto */
+    .card-container.open .card {
+      transform: rotateY(-180deg);
+    }
+
+    /* Caras de la tarjeta */
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 35px;
+      text-align: center;
+    }
+
+    /* PORTADA (Frente) */
+    .card-front {
+      background: linear-gradient(145deg, #fff5f7, #ffe3e8);
+      border: 2px solid #f8bbd0;
+      color: #881337;
+    }
+
+    .border-inner {
+      border: 1.5px dashed #d6336c;
+      border-radius: 14px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+    }
+
+    .front-subtitle {
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #be185d;
+      margin-bottom: 15px;
+    }
+
+    .front-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 4rem;
+      line-height: 1.1;
+      color: #9d174d;
+      margin-bottom: 20px;
+      text-shadow: 1px 2px 4px rgba(157, 23, 77, 0.1);
+    }
+
+    .heart-icon {
+      font-size: 3rem;
+      color: #e11d48;
+      animation: heartbeat 1.5s infinite;
+      margin: 15px 0;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.15); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.15); }
+    }
+
+    .tap-hint {
+      margin-top: 30px;
+      font-size: 0.8rem;
+      color: #9f1239;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* INTERIOR (Reverso al girar) */
+    .card-inside {
+      background: #ffffff;
+      transform: rotateY(180deg);
+      border: 2px solid #f43f5e;
+      color: #4c0519;
+      justify-content: space-between;
+    }
+
+    .inside-header {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.8rem;
+      color: #be123c;
+      margin-top: 10px;
+    }
+
+    .message {
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: #374151;
+      font-weight: 400;
+      margin: 15px 0;
+    }
+
+    .message strong {
+      color: #be123c;
+      font-weight: 600;
+    }
+
+    .signature {
+      margin-bottom: 10px;
+    }
+
+    .signature p {
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+    .signature span {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.2rem;
+      color: #9f1239;
+      display: block;
+      margin-top: 5px;
+    }
+
+    /* Botón de volver a cerrar */
+    .close-hint {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fondo animado -->
+  <div class="bg-hearts" id="bgHearts"></div>
+
+  <!-- Tarjeta interactiva -->
+  <div class="card-container" onclick="this.classList.toggle('open')">
+    <div class="card">
+      
+      <!-- PORTADA -->
+      <div class="card-face card-front">
+        <div class="border-inner">
+          <span class="front-subtitle">Para la mejor mama del mundo</span>
+          <h1 class="front-title">Feliz<br>Cumpleaños</h1>
+          <div class="heart-icon">❤</div>
+          <p class="tap-hint">Toca la tarjeta para abrirla</p>
+        </div>
+      </div>
+
+      <!-- INTERIOR -->
+      <div class="card-face card-inside">
+        <h2 class="inside-header">Feliz Cumpleaños,</h2>
+        
+        <p class="message">
+          Se que este ha sido un año que no ha salido como lo imaginabas pero tambien trajo el mejor regalo que nos pudo dar la vida. 
+          <br><br>
+          Gracias por estar en todos los momentos malos y tambien en los buenos solo espero que las cosas mejoren y que siempre sigas siendo esa mujer valiente y luchadora. Eres <strong>La mejor</strong> y deseo que este nuevo año de vida Nachito de traiga mucha felicidad FELIZ CUMPLEAÑOS.
+        </p>
+
+        <div class="signature">
+          <p>Siempre estare cuando lo necesites,</p>
+          <span>[EDGAR]</span>
+        </div>
+
+        <span class="close-hint">(Toca de nuevo para cerrar)</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Script para generar corazones flotantes -->
+  <script>
+    const container = document.getElementById('bgHearts');
+    const symbols = ['❤', '✨', '♥', '🌸'];
+    
+    for (let i = 0; i < 18; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('bg-heart');
+      heart.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 6 + 7) + 's';
+      heart.style.animationDelay = (Math.random() * 5) + 's';
+      heart.style.fontSize = (Math.random() * 16 + 14) + 'px';
+      container.appendChild(heart);
+    }
+  </script>
+
+</body>
+</html>
